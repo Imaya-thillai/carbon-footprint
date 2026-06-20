@@ -106,7 +106,7 @@ export function AIChatbot() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about reducing emissions..."
-                className="flex-1 px-3 py-2 bg-gray-100 dark:bg-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="flex-1 px-3 py-2 bg-gray-100 dark:bg-slate-800 rounded-lg text-sm text-gray-900 placeholder-gray-500 dark:text-gray-100 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 aria-label="Message AI assistant"
               />
               <button 
