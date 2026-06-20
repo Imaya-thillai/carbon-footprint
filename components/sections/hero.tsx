@@ -42,7 +42,7 @@ export function HeroSection() {
           <MagneticButton onClick={() => document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' })}>
             Start Free Calculation
           </MagneticButton>
-          <Link href="/auth">
+          <Link href="/auth?mode=signup">
             <MagneticButton>Get Started Free</MagneticButton>
           </Link>
           <button 

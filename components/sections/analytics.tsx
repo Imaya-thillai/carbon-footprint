@@ -103,10 +103,12 @@ export function AnalyticsSection() {
           >
             <GlassCard className="p-6">
               <h3 className="text-2xl font-bold mb-6">Monthly Emissions</h3>
-              <div role="img" aria-label="Line chart showing actual versus target monthly carbon emissions" className="h-[300px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <MemoizedLineChart />
-                </ResponsiveContainer>
+              <div className="w-full overflow-x-auto pb-4">
+                <div role="img" aria-label="Line chart showing actual versus target monthly carbon emissions" className="h-[300px] min-w-[500px] w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <MemoizedLineChart />
+                  </ResponsiveContainer>
+                </div>
               </div>
             </GlassCard>
           </motion.div>
@@ -120,10 +122,12 @@ export function AnalyticsSection() {
           >
             <GlassCard className="p-6">
               <h3 className="text-2xl font-bold mb-6">Emissions by Category</h3>
-              <div role="img" aria-label="Pie chart showing emissions breakdown by category: Transportation, Energy, Diet, Waste" className="h-[300px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <MemoizedPieChart />
-                </ResponsiveContainer>
+              <div className="w-full overflow-x-auto pb-4">
+                <div role="img" aria-label="Pie chart showing emissions breakdown by category: Transportation, Energy, Diet, Waste" className="h-[300px] min-w-[300px] w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <MemoizedPieChart />
+                  </ResponsiveContainer>
+                </div>
               </div>
             </GlassCard>
           </motion.div>

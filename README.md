@@ -1,6 +1,6 @@
 # EcoTrack AI - Carbon Footprint Tracker
 
-![EcoTrack AI](./public/og-image.png)
+![EcoTrack AI](./public/eco-earth.png)
 
 > **Hack2Skill PromptWars Submission** | Vertical: Sustainability & ESG - Carbon Footprint Tracking
 
@@ -80,7 +80,7 @@ pnpm start
 
 ### Calculation Engine
 The `lib/carbon-calculator.ts` uses established emission factors to convert user inputs into kg CO2 equivalent:
-- **Electricity**: 0.92 kg CO2 / kWh
+- **Electricity**: 0.386 kg CO2 / kWh (US EPA average)
 - **Natural Gas**: 5.3 kg CO2 / therm
 - **Car Miles**: 0.411 kg CO2 / mile (US passenger vehicle average)
 - **Flights**: 255 kg CO2 / flight hour
@@ -89,7 +89,7 @@ The `lib/carbon-calculator.ts` uses established emission factors to convert user
 *Note: These factors are simplified proxies for the scope of this hackathon.*
 
 ### Tech Stack
-- **Framework**: Next.js 16 (App Router)
+- **Framework**: Next.js 15.x (App Router)
 - **Language**: TypeScript 5.7
 - **Styling**: Tailwind CSS v4, Framer Motion
 - **Testing**: Jest, React Testing Library

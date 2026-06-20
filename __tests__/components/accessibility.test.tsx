@@ -1,7 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { axe, toHaveNoViolations } from 'jest-axe';
 import { CalculatorSection } from '../../components/sections/calculator';
+
+expect.extend(toHaveNoViolations);
 
 jest.mock('next/navigation', () => ({
   useRouter() {
@@ -37,17 +40,16 @@ global.ResizeObserver = class ResizeObserver {
 
 describe('Accessibility Requirements', () => {
   describe('Calculator Section', () => {
-    it('has a skip navigation link', () => {
-      render(<CalculatorSection />);
-      // Testing specific component a11y
-      expect(screen.getAllByRole('slider').length).toBeGreaterThan(0);
+    it('has no accessibility violations (jest-axe)', async () => {
+      const { container } = render(<CalculatorSection />);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
     });
 
     it('has ARIA labels for all sliders', () => {
       render(<CalculatorSection />);
       const sliders = screen.getAllByRole('slider');
       sliders.forEach((slider) => {
-        // Will fail until ARIA attributes are added in Phase 3
         expect(slider).toHaveAttribute('aria-label');
       });
     });

@@ -20,9 +20,9 @@ describe('Carbon Calculator Logic', () => {
   describe('calculateMonthlyCarbon', () => {
     it('calculates the correct total for given inputs', () => {
       const total = calculateMonthlyCarbon(defaultInput);
-      // 100*0.92 + 50*5.3 + 200*0.411 + 2*255 + 150*0.5 + 100*0.2
-      // 92 + 265 + 82.2 + 510 + 75 + 20 = 1044.2
-      expect(total).toBe(1044.2);
+      // 100*0.386 + 50*5.3 + 200*0.411 + 2*255 + 150*0.5 + 100*0.2
+      // 38.6 + 265 + 82.2 + 510 + 75 + 20 = 990.8
+      expect(total).toBe(990.8);
     });
 
     it('handles zero inputs correctly', () => {
@@ -41,7 +41,7 @@ describe('Carbon Calculator Logic', () => {
   describe('predictYearlyCarbon', () => {
     it('multiplies monthly total by 12', () => {
       expect(predictYearlyCarbon(100)).toBe(1200);
-      expect(predictYearlyCarbon(1044.2)).toBe(12530.4);
+      expect(predictYearlyCarbon(990.8)).toBe(11889.6);
     });
   });
 
@@ -75,7 +75,7 @@ describe('Carbon Calculator Logic', () => {
   describe('calculateReductionPotential', () => {
     it('calculates 30% reduction correctly', () => {
       expect(calculateReductionPotential(100)).toBe(30);
-      expect(calculateReductionPotential(1044)).toBe(313); // rounds correctly
+      expect(calculateReductionPotential(990)).toBe(297); // rounds correctly
     });
   });
 

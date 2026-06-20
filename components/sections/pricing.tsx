@@ -61,8 +61,11 @@ export function PricingSection() {
     if (!session) {
       router.push('/auth');
     } else {
-      setToastMessage(`Successfully subscribed to ${planName} plan!`);
-      setTimeout(() => setToastMessage(null), 3000);
+      setToastMessage(`[DEMO] Redirecting to Stripe for ${planName} plan...`);
+      setTimeout(() => {
+        setToastMessage(`Demo payment successful! Welcome to the ${planName} plan.`);
+        setTimeout(() => setToastMessage(null), 4000);
+      }, 1500);
     }
   };
 

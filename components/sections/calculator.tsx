@@ -68,7 +68,7 @@ export function CalculatorSection() {
             <div>
               <label htmlFor="electricity" className="flex items-center justify-between mb-3">
                 <span className="font-semibold text-gray-900 dark:text-white">
-                  ⚡ Monthly Electricity (kWh)
+                  ⚡ Monthly Electricity (kWh) <span className="text-xs font-normal text-gray-500 ml-1">(US avg: 877)</span>
                 </span>
                 <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400" aria-hidden="true">
                   {formData.electricity}
@@ -79,10 +79,10 @@ export function CalculatorSection() {
                 type="range"
                 aria-label="Monthly Electricity in kWh"
                 aria-valuemin={0}
-                aria-valuemax={500}
+                aria-valuemax={2000}
                 aria-valuenow={formData.electricity}
                 min="0"
-                max="500"
+                max="2000"
                 value={formData.electricity}
                 onChange={(e) => handleChange('electricity', Number(e.target.value))}
                 className="w-full h-2 bg-emerald-200 dark:bg-emerald-900/30 rounded-lg appearance-none cursor-pointer accent-emerald-600"
@@ -93,7 +93,7 @@ export function CalculatorSection() {
             <div>
               <label htmlFor="gasUsage" className="flex items-center justify-between mb-3">
                 <span className="font-semibold text-gray-900 dark:text-white">
-                  🔥 Natural Gas (therms/month)
+                  🔥 Natural Gas (therms/month) <span className="text-xs font-normal text-gray-500 ml-1">(US avg: 48)</span>
                 </span>
                 <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400" aria-hidden="true">
                   {formData.gasUsage}
@@ -104,10 +104,10 @@ export function CalculatorSection() {
                 type="range"
                 aria-label="Natural Gas in therms per month"
                 aria-valuemin={0}
-                aria-valuemax={100}
+                aria-valuemax={200}
                 aria-valuenow={formData.gasUsage}
                 min="0"
-                max="100"
+                max="200"
                 value={formData.gasUsage}
                 onChange={(e) => handleChange('gasUsage', Number(e.target.value))}
                 className="w-full h-2 bg-emerald-200 dark:bg-emerald-900/30 rounded-lg appearance-none cursor-pointer accent-emerald-600"
@@ -118,7 +118,7 @@ export function CalculatorSection() {
             <div>
               <label htmlFor="carMiles" className="flex items-center justify-between mb-3">
                 <span className="font-semibold text-gray-900 dark:text-white">
-                  🚗 Car Miles (monthly)
+                  🚗 Car Miles (monthly) <span className="text-xs font-normal text-gray-500 ml-1">(US avg: 1200)</span>
                 </span>
                 <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400" aria-hidden="true">
                   {formData.carMiles}
@@ -143,7 +143,7 @@ export function CalculatorSection() {
             <div>
               <label htmlFor="flights" className="flex items-center justify-between mb-3">
                 <span className="font-semibold text-gray-900 dark:text-white">
-                  ✈️ Flights (hours per month)
+                  ✈️ Flights (hours per month) <span className="text-xs font-normal text-gray-500 ml-1">(US avg: 1)</span>
                 </span>
                 <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400" aria-hidden="true">
                   {formData.flights}
@@ -168,7 +168,7 @@ export function CalculatorSection() {
             <div>
               <label htmlFor="diet" className="flex items-center justify-between mb-3">
                 <span className="font-semibold text-gray-900 dark:text-white">
-                  🍽️ Food Spending ($/month)
+                  🍽️ Food Spending ($/month) <span className="text-xs font-normal text-gray-500 ml-1">(US avg: $300)</span>
                 </span>
                 <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400" aria-hidden="true">
                   ${formData.diet}
@@ -193,7 +193,7 @@ export function CalculatorSection() {
             <div>
               <label htmlFor="shopping" className="flex items-center justify-between mb-3">
                 <span className="font-semibold text-gray-900 dark:text-white">
-                  🛍️ Shopping Spending ($/month)
+                  🛍️ Shopping Spending ($/month) <span className="text-xs font-normal text-gray-500 ml-1">(US avg: $250)</span>
                 </span>
                 <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400" aria-hidden="true">
                   ${formData.shopping}

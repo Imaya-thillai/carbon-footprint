@@ -34,16 +34,17 @@ export function Footer() {
             {/* Legal */}
             <div>
               <h4 className="font-semibold mb-4">Legal</h4>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Hackathon project — legal pages not applicable
-              </p>
+              <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                <li><a href="/privacy" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Privacy Policy</a></li>
+                <li><a href="/terms" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Terms of Service</a></li>
+              </ul>
             </div>
           </div>
 
           {/* Social & Bottom */}
           <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              © 2025 EcoTrack AI. All rights reserved. Built for Hack2Skill PromptWars.
+              © 2026 EcoTrack AI. All rights reserved. Built for Hack2Skill PromptWars.
             </p>
           </div>
         </div>

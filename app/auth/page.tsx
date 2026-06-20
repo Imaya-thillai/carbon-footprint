@@ -15,6 +15,15 @@ export default function AuthPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
   const [formMessage, setFormMessage] = useState<{type: 'success'|'error', text: string} | null>(null);
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('mode') === 'signup') {
+        setIsSignIn(false);
+      }
+    }
+  }, []);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -140,6 +149,27 @@ export default function AuthPage() {
                     aria-describedby={errors.name ? "name-error" : undefined}
                   />
                   {errors.name && <p id="name-error" className="mt-1 text-xs text-red-500" role="alert" aria-live="polite">{errors.name}</p>}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+              {isSignIn && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mb-4"
+                >
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData(prev => ({ ...prev, email: 'demo@ecotrack.ai', password: 'Demo1234!' }));
+                    }}
+                    className="w-full py-2 px-4 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-xl font-medium border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-all text-sm mb-2"
+                  >
+                    Quick Demo Login
+                  </button>
                 </motion.div>
               )}
             </AnimatePresence>

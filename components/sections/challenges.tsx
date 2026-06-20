@@ -124,7 +124,7 @@ export function ChallengesSection() {
                 { rank: 1, name: 'Alex Chen', score: '15,420', reduction: '-42%' },
                 { rank: 2, name: 'Jordan Williams', score: '14,890', reduction: '-38%' },
                 { rank: 3, name: 'Sam Martinez', score: '13,250', reduction: '-35%' },
-                { rank: 4, name: 'You', score: '8,540', reduction: '-18%' },
+                { rank: 4, name: 'Demo: You', score: '8,540', reduction: '-18%' },
               ].map((entry, i) => (
                 <div key={i} className="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors">
                   <div className="flex items-center gap-4">
