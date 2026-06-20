@@ -39,10 +39,16 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
+          <MagneticButton onClick={() => document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' })}>
+            Start Free Calculation
+          </MagneticButton>
           <Link href="/auth">
             <MagneticButton>Get Started Free</MagneticButton>
           </Link>
-          <button className="px-6 py-3 rounded-full border border-emerald-500 text-emerald-600 dark:text-emerald-400 font-semibold hover:bg-emerald-50 dark:hover:bg-emerald-950/20 transition-colors">
+          <button 
+            className="px-6 py-3 rounded-full border border-emerald-500 text-emerald-600 dark:text-emerald-400 font-semibold hover:bg-emerald-50 dark:hover:bg-emerald-950/20 transition-colors"
+            onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+          >
             Learn More
           </button>
         </motion.div>

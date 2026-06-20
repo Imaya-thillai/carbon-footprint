@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { GlassCard } from '../glass-card';
 import { MagneticButton } from '../magnetic-button';
+import { useRouter } from 'next/navigation';
 
 const PLANS = [
   {
@@ -52,8 +53,35 @@ const PLANS = [
 ];
 
 export function PricingSection() {
+  const router = useRouter();
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const handleSubscribe = (planName: string) => {
+    const session = localStorage.getItem('userSession');
+    if (!session) {
+      router.push('/auth');
+    } else {
+      setToastMessage(`Successfully subscribed to ${planName} plan!`);
+      setTimeout(() => setToastMessage(null), 3000);
+    }
+  };
+
   return (
     <section className="relative py-20 px-4 sm:px-6 lg:px-8">
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toastMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, x: '-50%' }}
+            exit={{ opacity: 0, y: 50, x: '-50%' }}
+            className="fixed bottom-24 left-1/2 z-50 bg-emerald-500 text-white px-6 py-3 rounded-full shadow-lg font-medium"
+          >
+            {toastMessage}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -112,9 +140,11 @@ export function PricingSection() {
                   ))}
                 </ul>
 
-                <MagneticButton className="w-full">
-                  {plan.name === 'Starter' ? 'Get Started' : 'Subscribe Now'}
-                </MagneticButton>
+                <div onClick={() => handleSubscribe(plan.name)}>
+                  <MagneticButton className="w-full">
+                    {plan.name === 'Starter' ? 'Get Started' : 'Subscribe Now'}
+                  </MagneticButton>
+                </div>
               </GlassCard>
             </motion.div>
           ))}

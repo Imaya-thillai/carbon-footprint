@@ -7,8 +7,10 @@ import { GlassCard } from '@/components/glass-card';
 import Link from 'next/link';
 import { z } from 'zod';
 import { signInSchema, signUpSchema } from '@/lib/validators';
+import { useRouter } from 'next/navigation';
 
 export default function AuthPage() {
+  const router = useRouter();
   const [isSignIn, setIsSignIn] = useState(true);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
@@ -38,12 +40,18 @@ export default function AuthPage() {
     try {
       if (isSignIn) {
         signInSchema.parse({ email: formData.email, password: formData.password });
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setFormMessage({ type: 'success', text: 'Successfully signed in!' });
+        await new Promise(resolve => setTimeout(resolve, 800));
+        localStorage.setItem('userSession', JSON.stringify({ name: formData.email.split('@')[0], email: formData.email }));
+        window.dispatchEvent(new Event('storage'));
+        setFormMessage({ type: 'success', text: 'Successfully signed in! Redirecting...' });
+        setTimeout(() => router.push('/'), 1000);
       } else {
         signUpSchema.parse(formData);
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setFormMessage({ type: 'success', text: 'Account created successfully!' });
+        await new Promise(resolve => setTimeout(resolve, 800));
+        localStorage.setItem('userSession', JSON.stringify({ name: formData.name, email: formData.email }));
+        window.dispatchEvent(new Event('storage'));
+        setFormMessage({ type: 'success', text: 'Account created successfully! Redirecting...' });
+        setTimeout(() => router.push('/'), 1000);
       }
     } catch (error: any) {
       if (error?.errors) {

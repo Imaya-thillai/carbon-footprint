@@ -3,6 +3,19 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import AuthPage from '../../app/auth/page';
 
+jest.mock('next/navigation', () => ({
+  useRouter() {
+    return {
+      push: jest.fn(),
+      replace: jest.fn(),
+      prefetch: jest.fn(),
+    };
+  },
+  usePathname() {
+    return '';
+  },
+}));
+
 describe('AuthPage', () => {
   it('renders sign in form by default', () => {
     render(<AuthPage />);

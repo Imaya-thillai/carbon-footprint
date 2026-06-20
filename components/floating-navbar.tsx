@@ -2,6 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from 'next-themes';
+import { Sun, Moon, LogOut } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const NAV_ITEMS = [
   { label: 'Features', icon: '✨', id: 'features' },
@@ -12,15 +15,59 @@ const NAV_ITEMS = [
 
 export function FloatingNavbar() {
   const [isVisible, setIsVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const [userName, setUserName] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
+    setMounted(true);
+    
+    // Check local storage for session
+    const session = localStorage.getItem('userSession');
+    if (session) {
+      try {
+        const user = JSON.parse(session);
+        setUserName(user.name.split(' ')[0]); // Get first name
+      } catch (e) {
+        // Ignore
+      }
+    }
+
     const handleScroll = () => {
       setIsVisible(window.scrollY > 300);
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    // Listen for storage changes from other tabs or auth page
+    const handleStorageChange = () => {
+      const newSession = localStorage.getItem('userSession');
+      if (newSession) {
+        try {
+          const user = JSON.parse(newSession);
+          setUserName(user.name.split(' ')[0]);
+        } catch (e) {
+          setUserName(null);
+        }
+      } else {
+        setUserName(null);
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('userSession');
+    setUserName(null);
+    window.dispatchEvent(new Event('storage')); // trigger update across app
+    router.push('/');
+  };
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -62,14 +109,44 @@ export function FloatingNavbar() {
               </motion.button>
             ))}
             <div className="w-px h-6 bg-white/10 mx-2" aria-hidden="true" />
-            <motion.a
-              href="/auth"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500 to-green-500 text-white font-semibold text-sm hover:shadow-lg hover:shadow-emerald-500/50 transition-shadow focus:outline-none focus:ring-2 focus:ring-emerald-500"
-            >
-              Sign Up
-            </motion.a>
+            
+            {/* Theme Toggle */}
+            {mounted && (
+              <motion.button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-2 rounded-full hover:bg-white/10 transition-colors text-white"
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+              </motion.button>
+            )}
+
+            {/* Auth Button */}
+            {userName ? (
+              <div className="flex items-center gap-2 ml-2">
+                <span className="text-white text-sm font-medium hidden sm:inline-block">Hi, {userName}</span>
+                <motion.button
+                  onClick={handleLogout}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-2 rounded-full bg-white/10 text-white hover:bg-red-500/80 hover:text-white transition-colors"
+                  title="Logout"
+                >
+                  <LogOut size={16} />
+                </motion.button>
+              </div>
+            ) : (
+              <motion.a
+                href="/auth"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-4 py-2 ml-2 rounded-full bg-gradient-to-r from-emerald-500 to-green-500 text-white font-semibold text-sm hover:shadow-lg hover:shadow-emerald-500/50 transition-shadow"
+              >
+                Sign Up
+              </motion.a>
+            )}
           </div>
         </motion.nav>
       )}

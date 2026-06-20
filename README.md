@@ -1,6 +1,6 @@
 # EcoTrack AI - Carbon Footprint Tracker
 
-![EcoTrack AI](public/og-image.png)
+![EcoTrack AI](./public/og-image.png)
 
 > **Hack2Skill PromptWars Submission** | Vertical: Sustainability & ESG - Carbon Footprint Tracking
 

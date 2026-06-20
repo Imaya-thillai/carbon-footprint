@@ -3,6 +3,19 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { CalculatorSection } from '../../components/sections/calculator';
 
+jest.mock('next/navigation', () => ({
+  useRouter() {
+    return {
+      push: jest.fn(),
+      replace: jest.fn(),
+      prefetch: jest.fn(),
+    };
+  },
+  usePathname() {
+    return '';
+  },
+}));
+
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({

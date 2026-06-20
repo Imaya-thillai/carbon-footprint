@@ -1,3 +1,4 @@
+import React from 'react';
 import '@testing-library/jest-dom';
 import { TextEncoder, TextDecoder } from 'util';
 Object.assign(global, { TextDecoder, TextEncoder });
@@ -23,3 +24,28 @@ global.ResizeObserver = class ResizeObserver {
   unobserve() {}
   disconnect() {}
 };
+
+// Mock next/navigation
+jest.mock('next/navigation', () => ({
+  useRouter() {
+    return {
+      push: jest.fn(),
+      replace: jest.fn(),
+      prefetch: jest.fn(),
+    };
+  },
+  usePathname() {
+    return '';
+  },
+}));
+
+// Mock recharts ResponsiveContainer
+jest.mock('recharts', () => {
+  const OriginalRecharts = jest.requireActual('recharts');
+  return {
+    ...OriginalRecharts,
+    ResponsiveContainer: ({ children }: any) => (
+      <div style={{ width: 800, height: 800 }}>{children}</div>
+    ),
+  };
+});
