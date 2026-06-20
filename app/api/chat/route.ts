@@ -26,7 +26,7 @@ export async function POST(req: Request) {
           content: m.text
         }))
       ],
-      model: "llama3-8b-8192",
+      model: "llama-3.1-8b-instant",
       max_tokens: 250,
       temperature: 0.7,
     });
