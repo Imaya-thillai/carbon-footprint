@@ -61,9 +61,9 @@ export function HeroSection() {
           transition={{ duration: 0.7, delay: 0.4 }}
         >
           {[
-            { label: '2.4M+', desc: 'Tons CO₂ Tracked' },
-            { label: '50K+', desc: 'Active Users' },
-            { label: '98%', desc: 'Accuracy Rate' },
+            { label: 'Real-time', desc: 'Calculation' },
+            { label: '6', desc: 'Emission Categories' },
+            { label: 'EPA-based', desc: 'Emission Factors' },
           ].map((stat, i) => (
             <GlassCard key={i} className="p-6">
               <div className="text-2xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400">

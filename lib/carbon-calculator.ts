@@ -10,9 +10,15 @@ export interface CarbonInputData {
 }
 
 /**
- * Calculates the total monthly carbon footprint in kg CO2.
- * @param data User input values for different categories
- * @returns Total footprint in kg, rounded to 2 decimal places
+ * Calculates the total monthly carbon footprint in kg CO2 equivalent.
+ * @param data - The carbon input data object
+ * @param data.electricity - Monthly electricity consumption in kWh (factor: 0.92 kg CO2/kWh)
+ * @param data.gasUsage - Monthly natural gas in therms (factor: 5.3 kg CO2/therm)
+ * @param data.carMiles - Monthly car miles driven (factor: 0.411 kg CO2/mile)
+ * @param data.flights - Monthly flight hours (factor: 255 kg CO2/hour)
+ * @param data.diet - Monthly food spending in USD (factor: 0.5 kg CO2/dollar)
+ * @param data.shopping - Monthly shopping spending in USD (factor: 0.2 kg CO2/dollar)
+ * @returns Total kg CO2 equivalent per month
  */
 export const calculateMonthlyCarbon = (data: CarbonInputData): number => {
   const electricity = (data.electricity || 0) * EMISSION_FACTORS.ELECTRICITY;

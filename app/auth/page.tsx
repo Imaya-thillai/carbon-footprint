@@ -54,15 +54,17 @@ export default function AuthPage() {
         setTimeout(() => router.push('/'), 1000);
       }
     } catch (error: any) {
-      if (error?.errors) {
+      if (error instanceof z.ZodError || error?.errors || error?.issues) {
         const newErrors: Record<string, string> = {};
-        error.errors.forEach((err: any) => {
-          if (err.path[0]) {
+        const issues = error.errors || error.issues || [];
+        issues.forEach((err: any) => {
+          if (err.path && err.path[0]) {
             newErrors[err.path[0].toString()] = err.message;
           }
         });
         setErrors(newErrors);
       } else {
+        console.error('Unexpected error:', error);
         setFormMessage({ type: 'error', text: 'An unexpected error occurred.' });
       }
     } finally {
@@ -106,6 +108,7 @@ export default function AuthPage() {
             <div 
               className={`p-3 rounded-lg text-sm mb-6 ${formMessage.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
               role="alert"
+              aria-live="polite"
             >
               {formMessage.text}
             </div>
@@ -130,10 +133,13 @@ export default function AuthPage() {
                     onChange={handleInputChange}
                     className={`w-full px-4 py-3 rounded-xl border ${errors.name ? 'border-red-500' : 'border-gray-200 dark:border-gray-800'} bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all`}
                     placeholder="John Doe"
+                    aria-label="Full Name"
+                    autoComplete="name"
+                    required
                     aria-invalid={errors.name ? "true" : "false"}
                     aria-describedby={errors.name ? "name-error" : undefined}
                   />
-                  {errors.name && <p id="name-error" className="mt-1 text-xs text-red-500" role="alert">{errors.name}</p>}
+                  {errors.name && <p id="name-error" className="mt-1 text-xs text-red-500" role="alert" aria-live="polite">{errors.name}</p>}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -150,10 +156,13 @@ export default function AuthPage() {
                 onChange={handleInputChange}
                 className={`w-full px-4 py-3 rounded-xl border ${errors.email ? 'border-red-500' : 'border-gray-200 dark:border-gray-800'} bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all`}
                 placeholder="you@example.com"
+                aria-label="Email address"
+                autoComplete="email"
+                required
                 aria-invalid={errors.email ? "true" : "false"}
                 aria-describedby={errors.email ? "email-error" : undefined}
               />
-              {errors.email && <p id="email-error" className="mt-1 text-xs text-red-500" role="alert">{errors.email}</p>}
+              {errors.email && <p id="email-error" className="mt-1 text-xs text-red-500" role="alert" aria-live="polite">{errors.email}</p>}
             </div>
 
             <div>
@@ -168,10 +177,13 @@ export default function AuthPage() {
                 onChange={handleInputChange}
                 className={`w-full px-4 py-3 rounded-xl border ${errors.password ? 'border-red-500' : 'border-gray-200 dark:border-gray-800'} bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all`}
                 placeholder="••••••••"
+                aria-label="Password"
+                autoComplete="current-password"
+                required
                 aria-invalid={errors.password ? "true" : "false"}
                 aria-describedby={errors.password ? "password-error" : undefined}
               />
-              {errors.password && <p id="password-error" className="mt-1 text-xs text-red-500" role="alert">{errors.password}</p>}
+              {errors.password && <p id="password-error" className="mt-1 text-xs text-red-500" role="alert" aria-live="polite">{errors.password}</p>}
             </div>
 
             <AnimatePresence>
@@ -192,10 +204,13 @@ export default function AuthPage() {
                     onChange={handleInputChange}
                     className={`w-full px-4 py-3 rounded-xl border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-200 dark:border-gray-800'} bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all`}
                     placeholder="••••••••"
+                    aria-label="Confirm Password"
+                    autoComplete="new-password"
+                    required
                     aria-invalid={errors.confirmPassword ? "true" : "false"}
                     aria-describedby={errors.confirmPassword ? "confirmPassword-error" : undefined}
                   />
-                  {errors.confirmPassword && <p id="confirmPassword-error" className="mt-1 text-xs text-red-500" role="alert">{errors.confirmPassword}</p>}
+                  {errors.confirmPassword && <p id="confirmPassword-error" className="mt-1 text-xs text-red-500" role="alert" aria-live="polite">{errors.confirmPassword}</p>}
                 </motion.div>
               )}
             </AnimatePresence>

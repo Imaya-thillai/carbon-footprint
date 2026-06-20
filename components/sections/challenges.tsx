@@ -112,8 +112,13 @@ export function ChallengesSection() {
           viewport={{ once: true }}
           className="mt-12"
         >
-          <GlassCard className="p-8">
-            <h3 className="text-2xl font-bold mb-6">Global Leaderboard</h3>
+          <GlassCard className="p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold">Global Leaderboard</h3>
+              <span className="text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200 px-2 py-1 rounded-full border border-emerald-200 dark:border-emerald-800">
+                Demo Data
+              </span>
+            </div>
             <div className="space-y-4">
               {[
                 { rank: 1, name: 'Alex Chen', score: '15,420', reduction: '-42%' },

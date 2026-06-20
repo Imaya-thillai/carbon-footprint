@@ -14,6 +14,7 @@ import { CalculatorSection } from '@/components/sections/calculator';
 import { AIPredictionsSection } from '@/components/sections/ai-predictions';
 import { AnalyticsSection } from '@/components/sections/analytics';
 import { ChallengesSection } from '@/components/sections/challenges';
+import { ErrorBoundary } from '@/components/error-boundary';
 import { TestimonialsSection } from '@/components/sections/testimonials';
 import { PricingSection } from '@/components/sections/pricing';
 import { CTASection } from '@/components/sections/cta';
@@ -67,7 +68,9 @@ export default function Home() {
 
         <Suspense fallback={<div className="h-screen" aria-hidden="true" />}>
           <section id="calculator" aria-label="Carbon Calculator">
-            <CalculatorSection />
+            <ErrorBoundary>
+              <CalculatorSection />
+            </ErrorBoundary>
           </section>
         </Suspense>
 
@@ -109,7 +112,9 @@ export default function Home() {
       </main>
 
       {/* AI Assistant */}
-      <AIChatbot />
+      <ErrorBoundary>
+        <AIChatbot />
+      </ErrorBoundary>
 
       {/* Footer */}
       <Footer />

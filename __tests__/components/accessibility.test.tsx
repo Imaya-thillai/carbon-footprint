@@ -55,7 +55,7 @@ describe('Accessibility Requirements', () => {
     it('uses semantic heading hierarchy', () => {
       render(<CalculatorSection />);
       const heading = screen.getByRole('heading', { level: 2 });
-      expect(heading).toBeInDocument();
+      expect(heading).toBeInTheDocument();
     });
   });
 });

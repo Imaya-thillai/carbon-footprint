@@ -2,7 +2,19 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import dynamic from 'next/dynamic';
+
+const LineChart = dynamic(() => import('recharts').then(mod => mod.LineChart), { ssr: false });
+const Line = dynamic(() => import('recharts').then(mod => mod.Line), { ssr: false });
+const XAxis = dynamic(() => import('recharts').then(mod => mod.XAxis), { ssr: false });
+const YAxis = dynamic(() => import('recharts').then(mod => mod.YAxis), { ssr: false });
+const CartesianGrid = dynamic(() => import('recharts').then(mod => mod.CartesianGrid), { ssr: false });
+const Tooltip = dynamic(() => import('recharts').then(mod => mod.Tooltip), { ssr: false });
+const Legend = dynamic(() => import('recharts').then(mod => mod.Legend), { ssr: false });
+const ResponsiveContainer = dynamic(() => import('recharts').then(mod => mod.ResponsiveContainer), { ssr: false });
+const PieChart = dynamic(() => import('recharts').then(mod => mod.PieChart), { ssr: false });
+const Pie = dynamic(() => import('recharts').then(mod => mod.Pie), { ssr: false });
+const Cell = dynamic(() => import('recharts').then(mod => mod.Cell), { ssr: false });
 import { GlassCard } from '../glass-card';
 
 const monthlyData = [
@@ -91,7 +103,7 @@ export function AnalyticsSection() {
           >
             <GlassCard className="p-6">
               <h3 className="text-2xl font-bold mb-6">Monthly Emissions</h3>
-              <div className="h-[300px] w-full">
+              <div role="img" aria-label="Line chart showing actual versus target monthly carbon emissions" className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <MemoizedLineChart />
                 </ResponsiveContainer>
@@ -108,7 +120,7 @@ export function AnalyticsSection() {
           >
             <GlassCard className="p-6">
               <h3 className="text-2xl font-bold mb-6">Emissions by Category</h3>
-              <div className="h-[300px] w-full">
+              <div role="img" aria-label="Pie chart showing emissions breakdown by category: Transportation, Energy, Diet, Waste" className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <MemoizedPieChart />
                 </ResponsiveContainer>

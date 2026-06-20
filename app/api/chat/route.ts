@@ -1,19 +1,45 @@
+import 'server-only';
 import { NextResponse } from 'next/server';
 import Groq from "groq-sdk";
+import { z } from 'zod';
+import { env } from '@/lib/env';
+
+const rateLimit = new Map<string, { count: number; resetTime: number }>();
+
+const MessageSchema = z.object({
+  messages: z.array(z.object({
+    sender: z.enum(['user', 'ai']),
+    text: z.string().max(2000),
+  })).max(20).optional(),
+});
 
 export async function POST(req: Request) {
   try {
-    const apiKey = process.env.GROQ_API_KEY;
-    if (!apiKey) {
-      console.error("GROQ_API_KEY is missing");
-      return NextResponse.json({ error: "API key not configured. Please add GROQ_API_KEY to your environment variables." }, { status: 500 });
+    const ip = req.headers.get('x-forwarded-for') ?? 'anonymous';
+    const now = Date.now();
+    const windowMs = 60 * 1000;
+    const maxRequests = 10;
+    const current = rateLimit.get(ip);
+    if (current && now < current.resetTime) {
+      if (current.count >= maxRequests) {
+        return NextResponse.json({ error: 'Too many requests. Try again in a minute.' }, { status: 429, headers: { 'Retry-After': '60' } });
+      }
+      current.count++;
+    } else {
+      rateLimit.set(ip, { count: 1, resetTime: now + windowMs });
+    }
+
+    const body = await req.json();
+    const parsed = MessageSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
     }
 
     const groq = new Groq({
-      apiKey: apiKey
+      apiKey: env.GROQ_API_KEY
     });
 
-    const { messages } = await req.json();
+    const { messages } = parsed.data;
 
     const chatCompletion = await groq.chat.completions.create({
       messages: [
@@ -21,8 +47,8 @@ export async function POST(req: Request) {
           role: 'system', 
           content: 'You are EcoTrack AI, an expert sustainability and carbon footprint assistant. Be concise, friendly, and practical. Keep responses under 3 sentences. Focus on actionable advice for reducing emissions.' 
         },
-        ...messages.map((m: { sender: string, text: string }) => ({
-          role: m.sender === 'user' ? 'user' : 'assistant',
+        ...(messages || []).map((m: { sender: string, text: string }) => ({
+          role: (m.sender === 'user' ? 'user' : 'assistant') as 'user' | 'assistant',
           content: m.text
         }))
       ],

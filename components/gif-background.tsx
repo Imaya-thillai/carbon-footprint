@@ -1,16 +1,19 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 export function GifBackground() {
   return (
     <div className="fixed inset-0 w-full h-full pointer-events-none z-0">
       {/* Animated GIF */}
       <div className="absolute inset-0">
-        <img
+        <Image
           src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mxj_files-paws-25466-dp5hRoSfVwpkXCGsHqg2uan7Nj93vC.gif"
           alt="Background pattern"
-          className="w-full h-full object-cover"
+          fill
+          unoptimized
+          className="object-cover"
         />
       </div>
 

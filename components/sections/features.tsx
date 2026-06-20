@@ -37,10 +37,10 @@ const FEATURES = [
     image: '/eco-wind-turbines.png',
   },
   {
-    icon: '📱',
-    title: 'Mobile App',
-    description: 'Track your carbon footprint on the go with our native mobile app',
-    image: '/eco-water.png',
+    title: 'Export Report',
+    description: 'Download a PDF summary of your carbon footprint',
+    icon: '📊',
+    color: 'from-fuchsia-400 to-fuchsia-600',
   },
 ];
 
